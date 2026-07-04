@@ -7,6 +7,7 @@ const theme_source = preload("res://theme/theme.gd")
 @export var _projects: Control
 @export var _asset_lib_projects: AssetLibProjects
 @export var _godots_releases: Control
+@export var _rss_feed: RssFeedControl
 @export var _auto_updates: Node
 @export var _asset_download: PackedScene
 @export var _title_tabs: BoxContainer
@@ -65,6 +66,7 @@ func _ready():
 	_title_tabs.add_child(TitleTabButton.new("GodotMonochrome", tr("Editors"), _tab_container, [_local_editors, _remote_editors]))
 	#_title_tabs.add_child(TitleTabButton.new("GodotMonochrome", tr("Remote Editors"), _tab_container, _remote_editors))
 	#_title_tabs.add_child(TitleTabButton.new(null, tr("Updates"), _tab_container, _updates))
+	_title_tabs.add_child(TitleTabButton.new("ExternalLink", tr("Feed"), _tab_container, [_rss_feed]))
 
 	_gui_base.set(
 		"theme_override_styles/panel",
@@ -128,6 +130,7 @@ func _ready():
 	_projects.init(_projects_service)
 	_local_editors.init(_local_editors_service)
 	_remote_editors.init(%DownloadsContainer)
+	_rss_feed.init()
 
 	_projects.manage_tags_requested.connect(_popup_manage_tags)
 	_local_editors.manage_tags_requested.connect(_popup_manage_tags)
@@ -164,8 +167,8 @@ func _enter_tree():
 		DisplayServer.window_set_size(window_size)
 		if screen_rect.size != Vector2i():
 			var window_position = Vector2i(
-				screen_rect.position.x + (screen_rect.size.x - window_size.x) / 2,
-				screen_rect.position.y + (screen_rect.size.y - window_size.y) / 2
+				 screen_rect.position.x + (screen_rect.size.x - window_size.x) / 2,
+				 screen_rect.position.y + (screen_rect.size.y - window_size.y) / 2
 			)
 			DisplayServer.window_set_position(window_position)
 
@@ -341,4 +344,4 @@ class TitleTabButton extends Button:
 		if what == NOTIFICATION_THEME_CHANGED:
 			if _icon_name:
 				self.icon = get_theme_icon(_icon_name, "EditorIcons")
-			#theme_type_variation = "MainScreenButton"
+				#theme_type_variation = "MainScreenButton"
