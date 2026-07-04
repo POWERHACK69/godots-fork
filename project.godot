@@ -19,6 +19,7 @@ config/description="Ultimate go-to hub for managing your Godot versions and proj
 config/tags=PackedStringArray("application")
 run/main_scene="res://src/main/main.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
+
 run/low_processor_mode=true
 boot_splash/bg_color=Color(0.113725, 0.133333, 0.160784, 1)
 config/icon="res://icon.svg"
@@ -33,6 +34,17 @@ HttpClient="*res://src/http_client.gd"
 Context="*uid://c81coxv48a5x8"
 AutoNativeFileDialog="*res://src/auto_native_file_dialog.gd"
 
+[debug]
+
+gdscript/warnings/unused_variable=0
+gdscript/warnings/unused_parameter=0
+gdscript/warnings/shadowed_variable=0
+gdscript/warnings/shadowed_variable_base_class=0
+gdscript/warnings/untyped_declaration=2
+gdscript/warnings/unsafe_property_access=2
+gdscript/warnings/unsafe_method_access=2
+gdscript/warnings/unsafe_call_argument=2
+
 [display]
 
 window/energy_saving/keep_screen_on=false
@@ -42,6 +54,7 @@ window/subwindows/embed_subwindows=false
 
 enabled=PackedStringArray("res://addons/use-context/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
 
+
 [filesystem]
 
 import/blender/enabled=false
@@ -49,10 +62,15 @@ import/fbx/enabled=false
 
 [godots]
 
-version_hint="4.2.1"
+version_hint="4.5"
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://assets/translations/en.po", "res://assets/translations/zh_CN.po", "res://assets/translations/zh_TW.po")
 
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.113725, 0.133333, 0.160784, 1)

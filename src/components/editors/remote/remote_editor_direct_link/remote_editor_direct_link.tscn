@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dhvesrdvhm6lv"]
 
-[ext_resource type="Script" uid="uid://da2wilfjmk4s2" path="res://src/components/editors/remote/remote_editor_direct_link/remote_editor_direct_link.gd" id="1_nwbsu"]
+[ext_resource type="Script" uid="uid://xksdiv3vlx17" path="res://src/components/editors/remote/remote_editor_direct_link/remote_editor_direct_link.gd" id="1_nwbsu"]
 
 [node name="RemoteEditorDirectLink" type="ConfirmationDialog" unique_id=602156080]
 oversampling_override = 1.0
