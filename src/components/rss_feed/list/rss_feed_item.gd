@@ -7,9 +7,11 @@ signal tag_clicked(tag: String)
 @onready var _source_label := %SourceLabel as Label
 @onready var _date_label := %DateLabel as Label
 @onready var _open_button := %OpenButton as Button
+@onready var _thumbnail := %Thumbnail as TextureRect
 
 var _item: RssFeed.FeedItem
 var _tags: Array = []
+var _images_src: RemoteImageSrc.I
 
 
 func init(item: RssFeed.FeedItem) -> void:
@@ -22,6 +24,25 @@ func init(item: RssFeed.FeedItem) -> void:
 
 	_open_button.icon = get_theme_icon("ExternalLink", "EditorIcons")	
 	_open_button.pressed.connect(func() -> void: OS.shell_open(item.link))
+
+	if not item.thumbnail_url.is_empty():
+		_load_thumbnail()
+
+
+func set_images_src(images_src: RemoteImageSrc.I) -> void:
+	_images_src = images_src
+	if _item and not _item.thumbnail_url.is_empty():
+		_load_thumbnail()
+
+
+func _load_thumbnail() -> void:
+	if _images_src == null or _item.thumbnail_url.is_empty():
+		return
+	_images_src.async_load_img(_item.thumbnail_url, func(tex: Texture2D) -> void:
+		if tex is ImageTexture:
+			(tex as ImageTexture).set_size_override(Vector2i(64, 64) * Config.EDSCALE)
+		_thumbnail.texture = tex
+	)
 
 
 func apply_filter(filter: Callable) -> bool:

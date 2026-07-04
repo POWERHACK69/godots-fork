@@ -30,6 +30,7 @@ const FEED_SOURCES: Array[Dictionary] = [
 var _http_request: HTTPRequest
 var _data_loaded := false
 var _fetching := false
+var _images_src: RemoteImageSrc.I
 
 
 func _ready() -> void:
@@ -37,6 +38,10 @@ func _ready() -> void:
 	add_child(_http_request)
 	_refresh_button.icon = get_theme_icon("Reload", "EditorIcons")
 	_refresh_button.pressed.connect(_refetch_data)
+	_images_src = RemoteImageSrc.LoadFileBuffer.new(
+		RemoteImageSrc.FileByUrlCachedEtag.new(),
+		get_theme_icon("FileBrokenBigThumb", "EditorIcons")
+	)
 
 
 func init() -> void:

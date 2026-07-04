@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://src/components/rss_feed/list/rss_feed_item.gd" id="1_script"]
 [ext_resource type="Script" path="res://src/components/misc/list_item_title_label.gd" id="2_title"]
 [ext_resource type="Script" path="res://src/components/misc/themed_button.gd" id="3_button"]
+[ext_resource type="Script" path="res://src/components/misc/list_item_icon.gd" id="4_icon"]
 
 [node name="RssFeedItem" type="HBoxContainer"]
 anchors_preset = 15
@@ -11,6 +12,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
+
+[node name="Thumbnail" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("4_icon")
+_stretch_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
