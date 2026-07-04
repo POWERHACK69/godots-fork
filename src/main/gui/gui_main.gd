@@ -168,9 +168,9 @@ func _enter_tree() -> void:
 		
 		DisplayServer.window_set_size(window_size)
 		if screen_rect.size != Vector2i():
-		var window_position := Vector2i(
-			screen_rect.position.x + (screen_rect.size.x - window_size.x) / 2,
-			screen_rect.position.y + (screen_rect.size.y - window_size.y) / 2
+			var window_position := Vector2i(
+				screen_rect.position.x + (screen_rect.size.x - window_size.x) / 2,
+				screen_rect.position.y + (screen_rect.size.y - window_size.y) / 2
 			)
 			DisplayServer.window_set_position(window_position)
 

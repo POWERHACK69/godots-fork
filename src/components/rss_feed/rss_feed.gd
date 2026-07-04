@@ -68,7 +68,7 @@ func _refetch_data() -> void:
 
 func _fetch_feed(source: Dictionary) -> Array:
 	var headers := PackedStringArray([Config.AGENT_HEADER])
-	_http_request.request(source.url, headers, HTTPClient.METHOD_GET)
+	_http_request.request(source.url as String, headers, HTTPClient.METHOD_GET)
 	var response: Array = await _http_request.request_completed
 	var response_obj := HttpClient.Response.new(response)
 
@@ -87,7 +87,7 @@ func _parse_feed(root: XMLNode, source: Dictionary) -> Array:
 	# YouTube (Atom) uses <entry>, standard RSS uses <item>
 	for child: XMLNode in root.children:
 		if child.name == "entry" or child.name == "item":
-			var item := _parse_entry(child, source.name)
+			var item := _parse_entry(child, source.name as String)
 			if item and not item.title.is_empty():
 				items.append(item)
 	return items
