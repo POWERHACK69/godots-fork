@@ -14,6 +14,9 @@ var _tags: Array = []
 var _images_src: RemoteImageSrc.I
 
 
+const DEFAULT_ICON = preload("res://assets/default_project_icon.svg")
+
+
 func init(item: RssFeed.FeedItem) -> void:
 	_item = item
 	_tags = [item.source_name]
@@ -25,7 +28,9 @@ func init(item: RssFeed.FeedItem) -> void:
 	_open_button.icon = get_theme_icon("ExternalLink", "EditorIcons")	
 	_open_button.pressed.connect(func() -> void: OS.shell_open(item.link))
 
-	if not item.thumbnail_url.is_empty():
+	if item.thumbnail_url.is_empty():
+		_thumbnail.texture = DEFAULT_ICON
+	else:
 		_load_thumbnail()
 
 
