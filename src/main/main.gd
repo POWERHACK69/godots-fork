@@ -17,10 +17,10 @@ func _ready():
 	pass
 
 func _is_cli_mode(args: PackedStringArray) -> bool:
-	if args.size() > 1 and OS.has_feature("editor"):
-		return true
-	elif args.size() >= 1 and OS.has_feature("template"):
-		return true
+	var cli_keywords := ["--ghelp", "-gh", "--recent", "-r", "editor", "exec"]
+	for arg in args:
+		if cli_keywords.has(arg):
+			return true
 	return false
 
 func _exit():

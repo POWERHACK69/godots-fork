@@ -138,9 +138,11 @@ func _parse_entry(entry: XMLNode, source_name: String) -> RssFeed.FeedItem:
 	# YouTube: <media:group><media:description>, RSS: <description>
 	var desc_node := _find_deep(entry, "media:description")
 	if not desc_node:
-		desc_node = smart_entry.find_smart_child_recursive(
+		var smart_desc := smart_entry.find_smart_child_recursive(
 			exml.Filters.by_name("description")
 		)
+		if smart_desc:
+			desc_node = smart_desc.o
 	if desc_node:
 		item.description = desc_node.content
 

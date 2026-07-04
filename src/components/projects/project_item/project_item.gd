@@ -440,4 +440,3 @@ class RunButton extends Button:
 		)
 		if item.has_invalid_editor:
 			tooltip_text = tr("Bind editor first.")
-
