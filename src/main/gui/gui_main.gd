@@ -8,6 +8,7 @@ const theme_source = preload("res://theme/theme.gd")
 @export var _asset_lib_projects: AssetLibProjects
 @export var _godots_releases: GodotsReleasesControl
 @export var _rss_feed: RssFeedControl
+@export var _project_templates: ProjectTemplatesControl
 @export var _auto_updates: AutoUpdates
 @export var _asset_download: PackedScene
 @export var _title_tabs: BoxContainer
@@ -25,6 +26,7 @@ var _on_exit_tree_callbacks: Array[Callable] = []
 var _local_remote_switch_context: LocalRemoteEditorsSwitchContext
 var _local_editors_service: LocalEditors.List
 var _projects_service: Projects.List
+var _templates_service: ProjectTemplates.List
 
 
 func _ready() -> void:
@@ -64,6 +66,7 @@ func _ready() -> void:
 	_title_tabs.add_child(TitleTabButton.new("ProjectList", tr("Projects"), _tab_container, [_projects]))
 	_title_tabs.add_child(TitleTabButton.new("AssetLib", tr("Asset Library"), _tab_container, [_asset_lib_projects]))
 	_title_tabs.add_child(TitleTabButton.new("GodotMonochrome", tr("Editors"), _tab_container, [_local_editors, _remote_editors]))
+	_title_tabs.add_child(TitleTabButton.new("FileList", tr("Templates"), _tab_container, [_project_templates]))
 	#_title_tabs.add_child(TitleTabButton.new("GodotMonochrome", tr("Remote Editors"), _tab_container, _remote_editors))
 	#_title_tabs.add_child(TitleTabButton.new(null, tr("Updates"), _tab_container, _updates))
 	_title_tabs.add_child(TitleTabButton.new("ExternalLink", tr("Feed"), _tab_container, [_rss_feed]))
@@ -127,11 +130,13 @@ func _ready() -> void:
 	
 	_local_editors_service.load()
 	_projects_service.load()
+	_templates_service.load()
 
 	_projects.init(_projects_service)
 	_local_editors.init(_local_editors_service)
 	_remote_editors.init(%DownloadsContainer as DownloadsContainer)
 	_rss_feed.init()
+	_project_templates.init(_templates_service, _projects_service)
 
 	_projects.manage_tags_requested.connect(_popup_manage_tags)
 	_local_editors.manage_tags_requested.connect(_popup_manage_tags)
@@ -198,17 +203,24 @@ func _enter_tree() -> void:
 		_local_editors_service,
 		preload("res://assets/default_project_icon.svg")
 	)
+	_templates_service = ProjectTemplates.List.new(
+		Config.TEMPLATES_CONFIG_PATH,
+		Config.DEFAULT_TEMPLATES_PATH
+	)
 	
 	Context.add(self, _local_remote_switch_context)
 	Context.add(self, _local_editors_service)
 	Context.add(self, _projects_service)
+	Context.add(self, _templates_service)
 	
 	_on_exit_tree_callbacks.append(func() -> void:
 		_local_editors_service.cleanup()
 		_projects_service.cleanup()
+		_templates_service.cleanup()
 		
 		Context.erase(self, _local_editors_service)
 		Context.erase(self, _projects_service)
+		Context.erase(self, _templates_service)
 		Context.erase(self, _local_remote_switch_context)
 	)
 
